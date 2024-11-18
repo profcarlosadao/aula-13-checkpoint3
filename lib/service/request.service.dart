@@ -1,19 +1,23 @@
 import 'package:aula13_checkpoint3/domain/car.dart';
 import 'package:dio/dio.dart';
-import 'device.service.dart';
 
 class RequestService {
+  final dio = Dio();
   final host = "https://gdapp.com.br/api";
 
-  Future<bool> sendAnimalData(Car car) async {
-    final dio = Dio();
-    final deviceService = DeviceService();
-    final info = await deviceService.info();
+  Future<List<Car>> readCarsService() async {
+    try {
+      final response = await dio.get('$host/cars');
+      return (response.data as List)
+          .map((json) => Car.fromJson(json as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      return [];
+    }
+  }
 
-    final data = {
-      'car': car.toJson(),
-      'device_info': info,
-    };
+  Future<bool> createCarService(Car car) async {
+    final data = {'car': car.toJson()};
 
     try {
       final response = await dio.post(

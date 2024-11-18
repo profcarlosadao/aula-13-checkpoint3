@@ -1,22 +1,23 @@
-import 'package:flutter/material.dart';
-import '../domain/car.dart';
-import '../service/request.service.dart';
 
-class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+import 'package:flutter/material.dart';
+import '../controller/car.controller.dart';
+
+class RegisterCarScreen extends StatefulWidget {
+  const RegisterCarScreen({super.key});
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  State<RegisterCarScreen> createState() => _RegisterCarScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _RegisterCarScreenState extends State<RegisterCarScreen> {
+  late CarController _carController;
   final TextEditingController _chassiController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _yearController = TextEditingController();
-  final _requestService = RequestService();
 
   @override
   void initState() {
+    _carController = CarController();
     super.initState();
   }
 
@@ -33,12 +34,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   _onPressed() async {
-    final animal = Car(
-        chassi: _chassiController.text,
-        name: _nameController.text,
-        year: _yearController.text);
-
-    final result = await _requestService.sendAnimalData(animal);
+    final result = await _carController.createCar(
+      chassi: _chassiController.text,
+      name: _nameController.text,
+      year: _yearController.text,
+    );
 
     if (result) {
       _showSnackBar("Carro cadastrado com sucesso!");

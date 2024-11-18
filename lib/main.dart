@@ -1,5 +1,5 @@
-import 'package:aula13_checkpoint3/screens/register.dart';
 import 'package:flutter/material.dart';
+import 'presentation/screens/cars.screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const RegisterScreen(),
+      home: const CarsScreen(),
     );
   }
 }
